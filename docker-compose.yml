@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: spring_boot_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2-console
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.H2Dialect
+      - SPRING_DATASOURCE_INITIALIZATION_MODE=always
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+      - CLOUD_AWS_SQS_CREATE_QUEUE_IF_NOT_EXISTS=true
+      - AWS_SQS_EMAIL_QUEUE_URL=http://localstack:4566/000000000000/email-queue
+      - AWS_SQS_EMAIL_QUEUE_NAME=email-queue
+    depends_on:
+      - localstack
+    networks:
+      - my-network
+
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
+    image: localstack/localstack:3.6
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - DEBUG=${DEBUG:-0}
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
