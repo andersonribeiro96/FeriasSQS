@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
 import java.util.List;
 
 @Entity
@@ -20,7 +19,6 @@ public class Funcionario {
     private String nome;
     private String email;
 
-
     private boolean isGestor;
 
     @ManyToOne
@@ -31,5 +29,13 @@ public class Funcionario {
     @OneToMany(mappedBy = "gestor")
     @JsonManagedReference
     private List<Funcionario> subordinados;
+
+    public boolean isGestor() {
+        return isGestor;
+    }
+
+    public void setIsGestor(boolean gestor) {
+        isGestor = gestor;
+    }
 
 }

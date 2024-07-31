@@ -5,6 +5,7 @@ import com.br.ferias.controller.dto.FeriasDTO;
 import com.br.ferias.controller.dto.SolicitarFeriasDTO;
 import com.br.ferias.domain.Ferias;
 import com.br.ferias.service.FeriasService;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ public class FeriasController {
         FeriasDTO feriasDTO = FeriasDTO.fromEntity(ferias);
         return ResponseEntity.ok(feriasDTO);
     }
+
 
     @PostMapping("/aprovar")
     public ResponseEntity<FeriasDTO> aprovarFerias(@RequestBody AprovaFeriasDTO aprovaFeriasDTO){

@@ -22,6 +22,7 @@ services:
       - CLOUD_AWS_SQS_CREATE_QUEUE_IF_NOT_EXISTS=true
       - AWS_SQS_EMAIL_QUEUE_URL=http://localstack:4566/000000000000/email-queue
       - AWS_SQS_EMAIL_QUEUE_NAME=email-queue
+      - AWS_SQS_EMAIL_SQS_URL=http://localstack:4566
     depends_on:
       - localstack
     networks:

@@ -20,7 +20,7 @@ public class EmailService {
     private void enviarEmail(String email, String assunto, String corpo) {
         EmailMessage emailMessage = new EmailMessage(email, assunto, corpo);
         emailProducerSQS.send(emailMessage);
-    }
+}
 
     public void notificarGestorSolicitacaoDeFerias(Ferias ferias) {
         Funcionario funcionario = ferias.getFuncionario();
